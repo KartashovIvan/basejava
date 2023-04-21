@@ -5,32 +5,31 @@ public class ArrayStorage {
     Resume[] storage = new Resume[10000];
 
     void clear() {
-        for (int index =0;index<size();index++){
-            if (storage[index] != null){
+        for (int index = 0; index < size(); index++) {
+            if (storage[index] != null) {
                 storage[index] = null;
             }
         }
     }
 
     void save(Resume r) {
-        int index =0;
 
-        for(;index<storage.length;index++){
-            if (storage[index] == null){
-                break;
+        for (int index = 0; index < storage.length; index++) {
+            if (storage[index] == null) {
+                storage[index] = r;
             }
 
-            if (r.uuid.equals(storage[index].uuid)){
+            if (r.uuid.equals(storage[index].uuid)) {
                 break;
             }
         }
 
-        storage[index] = r;
+
     }
 
     Resume get(String uuid) {
-        for(int index = 0;index<size();index++){
-            if (uuid.equals(storage[index].uuid)){
+        for (int index = 0; index < size(); index++) {
+            if (uuid.equals(storage[index].uuid)) {
                 return storage[index];
             }
         }
@@ -40,14 +39,14 @@ public class ArrayStorage {
     void delete(String uuid) {
         int index = 0;
 
-        for(;index<size();index++){
-            if (uuid.equals(storage[index].uuid)){
+        for (; index < size(); index++) {
+            if (uuid.equals(storage[index].uuid)) {
                 break;
             }
         }
 
-        for (;index<size();index++){
-            storage[index] = storage[index+1];
+        for (; index < size(); index++) {
+            storage[index] = storage[index + 1];
         }
     }
 
@@ -57,7 +56,7 @@ public class ArrayStorage {
     Resume[] getAll() {
         Resume[] all = new Resume[size()];
 
-        for (int index =0;index< all.length;index++){
+        for (int index = 0; index < all.length; index++) {
             all[index] = storage[index];
         }
 
@@ -65,10 +64,10 @@ public class ArrayStorage {
     }
 
     int size() {
-        int indexSize =0;
+        int indexSize = 0;
 
-        for(;indexSize<storage.length;indexSize++){
-            if (storage[indexSize] == null){
+        for (; indexSize < storage.length; indexSize++) {
+            if (storage[indexSize] == null) {
                 break;
             }
         }
