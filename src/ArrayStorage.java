@@ -19,6 +19,10 @@ public class ArrayStorage {
             if (storage[index] == null){
                 break;
             }
+
+            if (r.uuid.equals(storage[index].uuid)){
+                break;
+            }
         }
 
         storage[index] = r;
