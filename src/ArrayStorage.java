@@ -13,14 +13,21 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        for (int index = 0; index < storage.length; index++) {
-            if (storage[index] == null) {
-                storage[index] = r;
-                countResumes++;
-            }
+        boolean equalsResume = true;
 
-            if (r.uuid.equals(storage[index].uuid)) {
-                break;
+        if (countResumes == 0) {
+            storage[0] = r;
+            countResumes++;
+        } else {
+            for (int i = 0; i < countResumes; i++) {
+                if (r.uuid.equals(storage[i].uuid)) {
+                    equalsResume = false;
+                    break;
+                }
+            }
+            if (equalsResume) {
+                storage[countResumes] = r;
+                countResumes++;
             }
         }
     }
@@ -44,13 +51,14 @@ public class ArrayStorage {
         }
 
         for (; i < countResumes; i++) {
-            if (i == countResumes-1){
-                storage[i] =null;
+            if (i == countResumes - 1) {
+                storage[i] = null;
             } else {
                 storage[i] = storage[i + 1];
             }
+            countResumes--;
         }
-        countResumes--;
+
     }
 
     /**
