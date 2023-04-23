@@ -51,12 +51,12 @@ public class ArrayStorage {
         }
 
         for (; i < countResumes; i++) {
-            if (i == countResumes - 1) {
+            countResumes--;
+            if (i == countResumes) {
                 storage[i] = null;
             } else {
                 storage[i] = storage[i + 1];
             }
-            countResumes--;
         }
 
     }
