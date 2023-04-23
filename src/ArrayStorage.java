@@ -42,23 +42,13 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int i = 0;
-
-        for (; i < countResumes; i++) {
+        for (int i = 0; i < countResumes; i++) {
             if (uuid.equals(storage[i].uuid)) {
-                break;
+                countResumes--;
+                storage[i] = storage[countResumes];
+                storage[countResumes] = null;
             }
         }
-
-        for (; i < countResumes; i++) {
-            countResumes--;
-            if (i == countResumes) {
-                storage[i] = null;
-            } else {
-                storage[i] = storage[i + 1];
-            }
-        }
-
     }
 
     /**
@@ -70,7 +60,6 @@ public class ArrayStorage {
         for (int i = 0; i < all.length; i++) {
             all[i] = storage[i];
         }
-
         return all;
     }
 
