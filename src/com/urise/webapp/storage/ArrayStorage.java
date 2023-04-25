@@ -22,7 +22,7 @@ public class ArrayStorage {
         if (index >= 0) {
             storage[index] = r;
         } else {
-            System.out.printf("ERROR: resume %s not found", r.uuid);
+            System.out.printf("ERROR: resume %s not found\n", r.uuid);
         }
     }
 
@@ -30,7 +30,7 @@ public class ArrayStorage {
         int index = serchIndex(r.uuid);
 
         if (index != -1) {
-            System.out.printf("ERROR: resume %s already exist", r.uuid);
+            System.out.printf("ERROR: resume %s already exist\n", r.uuid);
         } else if (countResumes == storage.length) {
             System.out.println("Overload database");
         } else {
@@ -45,7 +45,7 @@ public class ArrayStorage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.printf("ERROR: resume %s not found", uuid);
+        System.out.printf("ERROR: resume %s not found\n", uuid);
         return null;
     }
 
@@ -57,7 +57,7 @@ public class ArrayStorage {
             storage[index] = storage[countResumes];
             storage[countResumes] = null;
         } else {
-            System.out.printf("ERROR: resume %s not found", uuid);
+            System.out.printf("ERROR: resume %s not found\n", uuid);
         }
     }
 
