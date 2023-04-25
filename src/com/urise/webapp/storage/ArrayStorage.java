@@ -2,22 +2,24 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10_000;
+
+    private static final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int countResumes;
 
     public void clear() {
-        for (int i = 0; i < countResumes; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage,0,countResumes,null);
         countResumes = 0;
     }
 
     public void update(Resume r) {
-        int index = serchIndex(r.uuid);
+        int index = getIndex(r.uuid);
 
         if (index >= 0) {
             storage[index] = r;
@@ -27,7 +29,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        int index = serchIndex(r.uuid);
+        int index = getIndex(r.uuid);
 
         if (index != -1) {
             System.out.printf("ERROR: resume %s already exist\n", r.uuid);
@@ -40,7 +42,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = serchIndex(uuid);
+        int index = getIndex(uuid);
 
         if (index >= 0) {
             return storage[index];
@@ -50,7 +52,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = serchIndex(uuid);
+        int index = getIndex(uuid);
 
         if (index >= 0) {
             countResumes--;
@@ -65,19 +67,14 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] all = new Resume[countResumes];
-
-        for (int i = 0; i < all.length; i++) {
-            all[i] = storage[i];
-        }
-        return all;
+        return Arrays.copyOfRange(storage,0,countResumes);
     }
 
     public int size() {
         return countResumes;
     }
 
-    public int serchIndex(String uuid) {
+    public int getIndex(String uuid) {
         for (int i = 0; i < countResumes; i++) {
             if (uuid.equals(storage[i].uuid)) {
                 return i;
