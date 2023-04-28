@@ -6,9 +6,9 @@ import ru.javawebinar.basejava.model.Resume;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-
-    public void save(Resume r) {
-        int index = getIndex(r.getUuid());
+    @Override
+    public void saveToStorage(Resume r, int index) {
+        index = getIndex(r.getUuid());
 
         if (index != -1) {
             System.out.printf("ERROR: resume %s already exist\n", r.getUuid());
@@ -20,8 +20,9 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
+    @Override
+    public void deleteFromStorage(String uuid, int index) {
+        index = getIndex(uuid);
 
         if (index >= 0) {
             countResumes--;
@@ -32,6 +33,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
     }
 
+    @Override
     public int getIndex(String uuid) {
         for (int i = 0; i < countResumes; i++) {
             if (uuid.equals(storage[i].getUuid())) {

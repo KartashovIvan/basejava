@@ -6,35 +6,28 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    public void save(Resume r) {
-        if (countResumes == 0) {
-            storage[countResumes] = r;
-            countResumes++;
-        } else if (countResumes == STORAGE_LIMIT) {
-            System.out.printf("Cant add %s. Overload database", r.getUuid());
-        } else {
-            int index = -(getIndex(r.getUuid())) - 1;
+    public void saveToStorage(Resume r, int index) {
+        index = -(getIndex(r.getUuid())) - 1;
 
-            if (index >= 0) {
-                System.arraycopy(storage, index, storage, index + 1, countResumes - index);
-                storage[index] = r;
-                countResumes++;
-            } else {
-                System.out.printf("Resume %s already exist\n", r.getUuid());
-            }
+        if (index <= -1) {
+            System.out.printf("Resume %s already exist\n", r.getUuid());
+        } else if (countResumes == STORAGE_LIMIT) {
+            System.out.printf("Cant add resume %s. Overload database\n", r.getUuid());
+        } else {
+            System.arraycopy(storage, index, storage, index + 1, countResumes - index);
+            storage[index] = r;
+            countResumes++;
         }
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-
+    public void deleteFromStorage(String uuid, int index) {
         if (index + 1 == countResumes) {
             storage[index] = null;
             countResumes--;
         } else if (index >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, countResumes - index);
             countResumes--;
+            System.arraycopy(storage, index + 1, storage, index, countResumes - index);
         } else {
             System.out.printf("Resume %s not found\n", uuid);
         }
