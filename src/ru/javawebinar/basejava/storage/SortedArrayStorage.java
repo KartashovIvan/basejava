@@ -6,31 +6,17 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    public void saveToStorage(Resume r, int index) {
+    public void saveResume(Resume r, int index) {
         index = -(getIndex(r.getUuid())) - 1;
-
-        if (index <= -1) {
-            System.out.printf("Resume %s already exist\n", r.getUuid());
-        } else if (countResumes == STORAGE_LIMIT) {
-            System.out.printf("Cant add resume %s. Overload database\n", r.getUuid());
-        } else {
-            System.arraycopy(storage, index, storage, index + 1, countResumes - index);
-            storage[index] = r;
-            countResumes++;
-        }
+        System.arraycopy(storage, index, storage, index + 1, countResumes - index);
+        storage[index] = r;
+        countResumes++;
     }
 
     @Override
-    public void deleteFromStorage(String uuid, int index) {
-        if (index + 1 == countResumes) {
-            storage[index] = null;
-            countResumes--;
-        } else if (index >= 0) {
-            countResumes--;
-            System.arraycopy(storage, index + 1, storage, index, countResumes - index);
-        } else {
-            System.out.printf("Resume %s not found\n", uuid);
-        }
+    public void deleteResume(String uuid, int index) {
+        countResumes--;
+        System.arraycopy(storage, index + 1, storage, index, countResumes - index);
     }
 
     @Override

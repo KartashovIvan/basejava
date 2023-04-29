@@ -7,30 +7,16 @@ import ru.javawebinar.basejava.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    public void saveToStorage(Resume r, int index) {
-        index = getIndex(r.getUuid());
-
-        if (index != -1) {
-            System.out.printf("ERROR: resume %s already exist\n", r.getUuid());
-        } else if (countResumes == STORAGE_LIMIT) {
-            System.out.printf("Cant add %s. Overload database", r.getUuid());
-        } else {
-            storage[countResumes] = r;
-            countResumes++;
-        }
+    public void saveResume(Resume r, int index) {
+        storage[countResumes] = r;
+        countResumes++;
     }
 
     @Override
-    public void deleteFromStorage(String uuid, int index) {
-        index = getIndex(uuid);
-
-        if (index >= 0) {
-            countResumes--;
-            storage[index] = storage[countResumes];
-            storage[countResumes] = null;
-        } else {
-            System.out.printf("ERROR: resume %s not found\n", uuid);
-        }
+    public void deleteResume(String uuid, int index) {
+        countResumes--;
+        storage[index] = storage[countResumes];
+        storage[countResumes] = null;
     }
 
     @Override
