@@ -22,6 +22,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.printf("Cant add resume %s. Overload database\n", r.getUuid());
         } else {
             saveResume(r, index);
+            countResumes++;
         }
     }
 
@@ -48,6 +49,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
+            countResumes--;
             deleteResume(uuid, index);
         } else {
             System.out.printf("ERROR: resume %s not found\n", uuid);

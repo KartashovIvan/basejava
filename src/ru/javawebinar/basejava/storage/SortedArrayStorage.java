@@ -10,12 +10,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         index = -(getIndex(r.getUuid())) - 1;
         System.arraycopy(storage, index, storage, index + 1, countResumes - index);
         storage[index] = r;
-        countResumes++;
     }
 
     @Override
     public void deleteResume(String uuid, int index) {
-        countResumes--;
         System.arraycopy(storage, index + 1, storage, index, countResumes - index);
     }
 
