@@ -5,11 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractArrayStorageTest{
-    private final Storage storage;
+public class ListStorageTest {
+    Storage storage = new ListStorage();
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
     private static final String UUID_2 = "uuid2";
@@ -18,14 +17,7 @@ public abstract class AbstractArrayStorageTest{
     private static final Resume RESUME_3 = new Resume(UUID_3);
     private static final String UUID_4 = "uuid4";
     private static final Resume RESUME_4 = new Resume(UUID_4);
-
     private static final String UUID_NOT_EXIST = "Dummy";
-
-    private static final int STORAGE_LIMIT = 10_000;
-
-    public AbstractArrayStorageTest(Storage storage) {
-        this.storage = storage;
-    }
 
     @Before
     public void setUp() {
@@ -39,8 +31,6 @@ public abstract class AbstractArrayStorageTest{
     public void clear() {
         storage.clear();
         assertSize(0);
-        Resume[] expected = {};
-        Assert.assertArrayEquals(expected, storage.getAll());
     }
 
     @Test
@@ -48,19 +38,6 @@ public abstract class AbstractArrayStorageTest{
         storage.save(RESUME_4);
         assertSize(4);
         assertGet(RESUME_4);
-    }
-
-    @Test(expected = StorageException.class)
-    public void saveOverflowStorage() {
-        storage.clear();
-        try {
-            for (int i = 0; i < STORAGE_LIMIT; i++) {
-                storage.save(new Resume("uuid_" + i));
-            }
-        } catch (StorageException se) {
-            Assert.fail("Overflow happened ahead of time");
-        }
-        storage.save(RESUME_4);
     }
 
     @Test(expected = ExistStorageException.class)
