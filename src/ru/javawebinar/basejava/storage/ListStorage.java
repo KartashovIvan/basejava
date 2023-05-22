@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.LinkedList;
@@ -11,37 +10,33 @@ public class ListStorage extends AbstractStorage {
     protected final List<Resume> resumeStorage = new LinkedList<>();
 
     @Override
-    public void clearStorage() {
+    public void clear() {
         resumeStorage.clear();
     }
 
     @Override
-    public void saveResume(Resume r, int index) {
-        if (resumeStorage.contains(r)) {
-            throw new ExistStorageException(r.getUuid());
-        } else {
-            resumeStorage.add(r);
-        }
+    public void saveResume(Resume r, Object searchKey) {
+        resumeStorage.add(r);
     }
 
     @Override
-    public void updateInStorage(Resume r, int index) {
-        resumeStorage.set(index, r);
+    public void updateInStorage(Resume r, Object searchKey) {
+        resumeStorage.set((Integer) searchKey, r);
     }
 
     @Override
-    public Resume returnResume(int index) {
-        return resumeStorage.get(index);
+    public Resume returnResume(Object searchKey) {
+        return resumeStorage.get((Integer) searchKey);
     }
 
     @Override
-    public void deleteResume(String uuid, int index) {
-        resumeStorage.remove(get(uuid));
+    public void deleteResume(Object searchKey) {
+        resumeStorage.remove((int) searchKey);
     }
 
     @Override
     public Resume[] getAll() {
-       return resumeStorage.toArray(new Resume[0]);
+        return resumeStorage.toArray(new Resume[0]);
     }
 
     @Override
@@ -50,8 +45,17 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        Resume r = new Resume(uuid);
-        return resumeStorage.indexOf(r);
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < resumeStorage.size(); i++) {
+            if (resumeStorage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
     }
 }

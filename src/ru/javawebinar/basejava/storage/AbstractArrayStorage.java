@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -12,34 +10,29 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int countResumes;
 
     @Override
-    public void clearStorage() {
+    public void clear() {
         Arrays.fill(storage, 0, countResumes, null);
         countResumes = 0;
     }
 
     @Override
-    public void saveResume(Resume r, int index) {
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else if (countResumes == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", r.getUuid());
-        } else {
-            saveResumeInArray(r, index);
-            countResumes++;
-        }
+    public void saveResume(Resume r, Object searchKey) {
+        saveResumeInArray(r, (Integer) searchKey);
+        countResumes++;
     }
 
-    public void updateInStorage(Resume r, int index) {
-        storage[index] = r;
+    public void updateInStorage(Resume r, Object searchKey) {
+        storage[(Integer) searchKey] = r;
     }
 
-    public Resume returnResume (int index) {
-        return storage[index];
+    @Override
+    public Resume returnResume(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
-    public void deleteResume(String uuid, int index) {
+    public void deleteResume(Object searchKey) {
         countResumes--;
-        deleteResumeInArray(uuid, index);
+        deleteResumeInArray((Integer)searchKey);
     }
 
     public Resume[] getAll() {
@@ -50,8 +43,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return countResumes;
     }
 
-    public abstract void saveResumeInArray(Resume r, int index);
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
+    public abstract void saveResumeInArray(Resume r, Integer index);
 
-    public abstract void deleteResumeInArray(String uuid, int index);
+    public abstract void deleteResumeInArray(int index);
 
 }
