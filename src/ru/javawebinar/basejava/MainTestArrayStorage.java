@@ -1,14 +1,14 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.ArrayStorage;
+import ru.javawebinar.basejava.storage.MapStorage;
 import ru.javawebinar.basejava.storage.Storage;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final Storage ARRAY_STORAGE = new ArrayStorage();
+    static final Storage ARRAY_STORAGE = new MapStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid3");

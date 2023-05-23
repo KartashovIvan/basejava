@@ -11,8 +11,13 @@ public class MapStorage extends AbstractStorage {
     private Map<String, Resume> resumeStorage = new HashMap<>();
 
     @Override
+    public void clear() {
+        resumeStorage.clear();
+    }
+
+    @Override
     protected void saveResume(Resume r, Object searchKey) {
-        resumeStorage.put(r.getUuid(),r);
+        resumeStorage.put((String) searchKey, r);
     }
 
     @Override
@@ -38,11 +43,6 @@ public class MapStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object searchKey) {
         return resumeStorage.containsKey(searchKey);
-    }
-
-    @Override
-    public void clear() {
-        resumeStorage.clear();
     }
 
     @Override
