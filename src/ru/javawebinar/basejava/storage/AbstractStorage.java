@@ -26,7 +26,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+        Object searchKey = getExistingSearchKey(uuid);
         deleteResume(searchKey);
     }
 
