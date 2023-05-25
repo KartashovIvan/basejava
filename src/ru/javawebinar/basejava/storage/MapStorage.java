@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
 
-    private Map<String, Resume> resumeStorage = new HashMap<>();
+    private final Map<String, Resume> resumeStorage = new HashMap<>();
 
     @Override
     public void clear() {
@@ -27,12 +27,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume returnResume(Object searchKey) {
-        return resumeStorage.get(searchKey);
+        return resumeStorage.get((String) searchKey);
     }
 
     @Override
     protected void deleteResume(Object searchKey) {
-        resumeStorage.remove(searchKey);
+        resumeStorage.remove((String)searchKey);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return resumeStorage.containsKey(searchKey);
+        return resumeStorage.containsKey((String) searchKey);
     }
 
     @Override
