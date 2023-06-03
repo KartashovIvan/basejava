@@ -9,6 +9,8 @@ public class ListStorage extends AbstractStorage {
 
     protected final List<Resume> resumeStorage = new LinkedList<>();
 
+//    private final Comparator <Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+
     @Override
     public void clear() {
         resumeStorage.clear();
@@ -35,8 +37,10 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return resumeStorage.toArray(new Resume[0]);
+    public List<Resume> getAllSorted() {
+        List<Resume> allResume = new LinkedList<>(resumeStorage);
+        allResume.sort(RESUME_COMPARATOR);
+        return allResume;
     }
 
     @Override
