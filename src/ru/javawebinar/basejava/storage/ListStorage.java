@@ -6,10 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-
     protected final List<Resume> resumeStorage = new LinkedList<>();
-
-//    private final Comparator <Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
 
     @Override
     public void clear() {
@@ -39,7 +36,7 @@ public class ListStorage extends AbstractStorage {
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> allResume = new LinkedList<>(resumeStorage);
-        allResume.sort(RESUME_COMPARATOR);
+        allResume.sort(RESUME_COMPARATOR_UUID);
         return allResume;
     }
 
@@ -49,9 +46,9 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Integer getSearchKey(String uuid) {
+    protected Object getSearchKey(Resume resume) {
         for (int i = 0; i < resumeStorage.size(); i++) {
-            if (resumeStorage.get(i).getUuid().equals(uuid)) {
+            if (resumeStorage.get(i).getUuid().equals(resume.getUuid())) {
                 return i;
             }
         }

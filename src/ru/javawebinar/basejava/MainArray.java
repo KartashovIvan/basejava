@@ -17,17 +17,21 @@ public class MainArray {
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Resume r;
+        Resume r = null;
         while (true) {
             System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | clear | update uuid | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
-            if (params.length < 1 || params.length > 2) {
+            if (params.length < 1 || params.length > 3) {
                 System.out.println("Неверная команда.");
                 continue;
             }
+            String name = null;
             String uuid = null;
             if (params.length == 2) {
-                uuid = params[1].intern();
+                name = params[1].intern();
+            } else if (params.length == 3) {
+                name = params[1].intern();
+                uuid = params[2].intern();
             }
             switch (params[0]) {
                 case "list":
@@ -37,16 +41,30 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume(uuid,null);
+                    if (params.length == 2) {
+                        r = new Resume(name);
+                    } else if (params.length == 3) {
+                        r = new Resume(uuid,name);
+                    }
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
                 case "delete":
-                    ARRAY_STORAGE.delete(uuid);
+                    if (params.length == 2) {
+                        r = new Resume(name);
+                    } else if (params.length == 3) {
+                        r = new Resume(uuid,name);
+                    }
+                    ARRAY_STORAGE.delete(r);
                     printAll();
                     break;
                 case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
+                    if (params.length == 2) {
+                        r = new Resume(name);
+                    } else if (params.length == 3) {
+                        r = new Resume(uuid,name);
+                    }
+                    System.out.println(ARRAY_STORAGE.get(r));
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();

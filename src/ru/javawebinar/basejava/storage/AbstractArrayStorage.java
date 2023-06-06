@@ -45,7 +45,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         for (int i = 0; i < countResumes; i++) {
             allResume.add(storage[i]);
         }
-        allResume.sort(RESUME_COMPARATOR);
+        allResume.sort(RESUME_COMPARATOR_UUID);
         return allResume;
     }
 

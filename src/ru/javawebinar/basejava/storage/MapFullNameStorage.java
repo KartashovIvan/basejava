@@ -4,9 +4,10 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapStorage extends AbstractStorage {
-
+public class MapFullNameStorage extends AbstractStorage {
     private final Map<String, Resume> resumeStorage = new HashMap<>();
+
+    protected final Comparator<Resume> RESUME_COMPARATOR_NAME = (o1, o2) -> o1.getFullName().compareTo(o2.getFullName());
 
     @Override
     public void clear() {
@@ -34,8 +35,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+    protected Object getSearchKey(Resume resume) {
+        return resume.getFullName();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class MapStorage extends AbstractStorage {
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> allResume = new LinkedList<>(resumeStorage.values());
-        allResume.sort(RESUME_COMPARATOR);
+        allResume.sort(RESUME_COMPARATOR_NAME.thenComparing(RESUME_COMPARATOR_UUID));
         return allResume;
     }
 
