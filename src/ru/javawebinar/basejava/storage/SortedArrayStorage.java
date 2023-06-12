@@ -3,8 +3,11 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+
+    private final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
     @Override
     public void saveResumeInArray(Resume r, Integer index) {
         index = -index - 1;
@@ -18,7 +21,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected Object getSearchKey(Resume resume) {
-        return Arrays.binarySearch(storage, 0, countResumes, resume, RESUME_COMPARATOR_UUID);
+    protected Object getSearchKey(String uuid) {
+        Resume r = new Resume(uuid, null);
+        return Arrays.binarySearch(storage, 0, countResumes, r , RESUME_COMPARATOR);
     }
 }

@@ -34,8 +34,8 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(Resume resume) {
-        return resume.getUuid();
+    protected Object getSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override
@@ -44,10 +44,8 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> allResume = new LinkedList<>(resumeStorage.values());
-        allResume.sort(RESUME_COMPARATOR_UUID);
-        return allResume;
+    protected List<Resume> getListResumes() {
+        return new LinkedList<>(resumeStorage.values());
     }
 
     @Override

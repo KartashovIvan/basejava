@@ -5,47 +5,54 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Comparator;
+import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
-
-    protected final Comparator<Resume> RESUME_COMPARATOR_UUID = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
+    protected final Comparator<Resume> RESUME_COMPARATOR = new Resume.ComparatorName().thenComparing(new Resume.ComparatorUuid());
 
     @Override
     public void save(Resume r) {
-        Object searchKey = getNotExistingSearchKey(r);
+        Object searchKey = getNotExistingSearchKey(r.getUuid());
         saveResume(r, searchKey);
     }
 
     @Override
     public void update(Resume r) {
-        Object searchKey = getExistingSearchKey(r);
+        Object searchKey = getExistingSearchKey(r.getUuid());
         updateInStorage(r, searchKey);
     }
 
     @Override
-    public Resume get(Resume resume) {
-        Object searchKey = getExistingSearchKey(resume);
+    public Resume get(String uuid) {
+        Object searchKey = getExistingSearchKey(uuid);
         return returnResume(searchKey);
     }
 
     @Override
-    public void delete(Resume resume) {
-        Object searchKey = getExistingSearchKey(resume);
+    public void delete(String uuid) {
+        Object searchKey = getExistingSearchKey(uuid);
         deleteResume(searchKey);
     }
 
-    private Object getExistingSearchKey(Resume resume) {
-        Object searchKey = getSearchKey(resume);
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> resumes = getListResumes();
+        resumes.sort(RESUME_COMPARATOR);
+        return resumes;
+    }
+
+    private Object getExistingSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
-            throw new NotExistStorageException(resume.toString());
+            throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    private Object getNotExistingSearchKey(Resume resume) {
-        Object searchKey = getSearchKey(resume);
+    private Object getNotExistingSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
-            throw new ExistStorageException(resume.toString());
+            throw new ExistStorageException(uuid);
         }
         return searchKey;
     }
@@ -58,7 +65,9 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void deleteResume(Object searchKey);
 
-    protected abstract Object getSearchKey(Resume resume);
+    protected abstract List<Resume> getListResumes();
+
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract boolean isExist(Object searchKey);
 }
