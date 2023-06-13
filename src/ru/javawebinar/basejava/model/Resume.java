@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -56,19 +55,5 @@ public class Resume {
     @Override
     public String toString() {
         return "uuid= " + uuid + ", fullName= " + fullName;
-    }
-
-    public static class ComparatorName implements Comparator<Resume> {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getFullName().compareTo(o2.getFullName());
-        }
-    }
-
-    public static class ComparatorUuid implements Comparator<Resume> {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getUuid().compareTo(o2.getUuid());
-        }
     }
 }

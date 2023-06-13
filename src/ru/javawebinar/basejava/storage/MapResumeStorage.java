@@ -4,7 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapFullNameStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private final Map<String, Resume> resumeStorage = new HashMap<>();
 
     @Override
@@ -39,7 +39,7 @@ public class MapFullNameStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return resumeStorage.containsValue(searchKey);
+        return searchKey != null;
     }
 
     @Override

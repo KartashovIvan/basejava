@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
-    protected final Comparator<Resume> RESUME_COMPARATOR = new Resume.ComparatorName().thenComparing(new Resume.ComparatorUuid());
+    protected final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
 
     @Override
     public void save(Resume r) {
