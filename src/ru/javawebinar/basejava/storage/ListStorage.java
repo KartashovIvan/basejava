@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage <Integer> {
     protected final List<Resume> resumeStorage = new LinkedList<>();
 
     @Override
@@ -14,23 +14,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void saveResume(Resume r, Object searchKey) {
+    public void saveResume(Resume r, Integer searchKey) {
         resumeStorage.add(r);
     }
 
     @Override
-    public void updateInStorage(Resume r, Object searchKey) {
-        resumeStorage.set((Integer) searchKey, r);
+    public void updateInStorage(Resume r, Integer searchKey) {
+        resumeStorage.set(searchKey, r);
     }
 
     @Override
-    public Resume returnResume(Object searchKey) {
-        return resumeStorage.get((Integer) searchKey);
+    public Resume returnResume(Integer searchKey) {
+        return resumeStorage.get(searchKey);
     }
 
     @Override
-    public void deleteResume(Object searchKey) {
-        resumeStorage.remove((int) searchKey);
+    public void deleteResume(Integer searchKey) {
+        resumeStorage.remove(searchKey.intValue());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < resumeStorage.size(); i++) {
             if (resumeStorage.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -54,7 +54,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(Integer searchKey) {
         return searchKey != null;
     }
 }

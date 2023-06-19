@@ -4,7 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
 
     private final Map<String, Resume> resumeStorage = new HashMap<>();
 
@@ -14,33 +14,33 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveResume(Resume r, Object searchKey) {
-        resumeStorage.put((String) searchKey, r);
+    protected void saveResume(Resume r, String searchKey) {
+        resumeStorage.put(searchKey, r);
     }
 
     @Override
-    protected void updateInStorage(Resume r, Object searchKey) {
-        resumeStorage.put((String) searchKey, r);
+    protected void updateInStorage(Resume r, String searchKey) {
+        resumeStorage.put(searchKey, r);
     }
 
     @Override
-    protected Resume returnResume(Object searchKey) {
-        return resumeStorage.get((String) searchKey);
+    protected Resume returnResume(String searchKey) {
+        return resumeStorage.get(searchKey);
     }
 
     @Override
-    protected void deleteResume(Object searchKey) {
-        resumeStorage.remove((String) searchKey);
+    protected void deleteResume(String searchKey) {
+        resumeStorage.remove(searchKey);
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         return uuid;
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return resumeStorage.containsKey((String) searchKey);
+    protected boolean isExist(String searchKey) {
+        return resumeStorage.containsKey(searchKey);
     }
 
     @Override
