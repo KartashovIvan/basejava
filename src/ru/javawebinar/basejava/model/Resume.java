@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,7 +12,9 @@ public class Resume {
 
     // Unique identifier
     private final String uuid;
-    private String fullName;
+    private final String fullName;
+    public final Map<ContactType, String> contacts = new HashMap<>();
+    public final Map<SectionType, AbstractSection> sections = new HashMap<>();
 
     public Resume() {
         this(UUID.randomUUID().toString(), null);
@@ -54,6 +58,6 @@ public class Resume {
 
     @Override
     public String toString() {
-        return "uuid= " + uuid + ", fullName= " + fullName;
+        return "uuid= " + uuid + ",\nfullName= " + fullName + ",\n\ncontact" + contacts + ", \n\nsections" + sections;
     }
 }
