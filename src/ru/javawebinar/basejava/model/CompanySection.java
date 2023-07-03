@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CompanySection extends AbstractSection{
-    List<Company>companies = new LinkedList<>();
+    private final List<Company>companies = new LinkedList<>();
 
     public void addCompany (String name, String website, String title, String description, LocalDate startDate, LocalDate endDate) {
         companies.add(new Company(name,website,title,description,startDate,endDate));
@@ -17,6 +17,21 @@ public class CompanySection extends AbstractSection{
 
     public List<Company> getCompanies() {
         return companies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CompanySection that = (CompanySection) o;
+
+        return companies != null ? companies.equals(that.companies) : that.companies == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return companies != null ? companies.hashCode() : 0;
     }
 
     @Override
