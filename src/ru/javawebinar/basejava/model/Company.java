@@ -35,14 +35,14 @@ public class Company {
 
         if (!Objects.equals(name, company.name)) return false;
         if (!Objects.equals(website, company.website)) return false;
-        return periods != null ? periods.equals(company.periods) : company.periods == null;
+        return periods.equals(company.periods);
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (website != null ? website.hashCode() : 0);
-        result = 31 * result + (periods != null ? periods.hashCode() : 0);
+        result = 31 * result + periods.hashCode();
         return result;
     }
 

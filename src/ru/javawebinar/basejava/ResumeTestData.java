@@ -37,14 +37,14 @@ public class ResumeTestData {
         AbstractSection [] sections =  {personal, objective, achievement, qualification, experience, education};
 
         for(int i =0;i < ContactType.values().length;i++){
-            resume.contacts.put(ContactType.values()[i],contactsArray[i]);
+            resume.getContacts().put(ContactType.values()[i],contactsArray[i]);
         }
 
         for(int i =0;i < SectionType.values().length;i++){
-            resume.sections.put(SectionType.values()[i],sections[i]);
+            resume.getSections().put(SectionType.values()[i],sections[i]);
         }
 
-        ((CompanySection)resume.sections.get(EDUCATION)).getCompanies().get(0).addPeriod(period);
+        ((CompanySection)resume.getSection(EDUCATION)).getCompanies().get(0).addPeriod(period);
 
         System.out.println(resume);
     }

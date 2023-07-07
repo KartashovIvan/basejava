@@ -1,9 +1,6 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -13,8 +10,8 @@ public class Resume {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-    public final Map<ContactType, String> contacts = new HashMap<>();
-    public final Map<SectionType, AbstractSection> sections = new HashMap<>();
+    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume() {
         this(UUID.randomUUID().toString(), null);
@@ -30,12 +27,28 @@ public class Resume {
         this.fullName = fullName;
     }
 
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
+    }
+
     public String getUuid() {
         return uuid;
     }
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getContact(ContactType contact) {
+        return contacts.get(contact);
+    }
+
+    public AbstractSection getSection(SectionType section) {
+        return sections.get(section);
     }
 
     @Override

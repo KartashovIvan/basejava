@@ -51,18 +51,18 @@ public class Period {
 
         Period period = (Period) o;
 
-        if (!Objects.equals(title, period.title)) return false;
+        if (!title.equals(period.title)) return false;
         if (!Objects.equals(description, period.description)) return false;
-        if (!Objects.equals(startDate, period.startDate)) return false;
-        return Objects.equals(endDate, period.endDate);
+        if (!startDate.equals(period.startDate)) return false;
+        return endDate.equals(period.endDate);
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
+        int result = title.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + endDate.hashCode();
         return result;
     }
 
