@@ -11,15 +11,10 @@ public class Company {
     private final List<Period> periods = new LinkedList<>();
 
     public Company(String name, String website, String title, String description, LocalDate startDate, LocalDate endDate) {
+        Objects.requireNonNull(name ,"name must not be null");
         this.name = name;
         this.website = website;
         periods.add(new Period(title, description, startDate, endDate));
-    }
-
-    public Company(String name, String website, String title, LocalDate startDate, LocalDate endDate) {
-        this.name = name;
-        this.website = website;
-        periods.add(new Period(title, startDate, endDate));
     }
 
     public void addPeriod(Period period) {

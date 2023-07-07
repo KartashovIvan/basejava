@@ -12,7 +12,7 @@ public class CompanySection extends AbstractSection{
     }
 
     public void addEducation (String name, String website, String title, LocalDate startDate, LocalDate endDate){
-        companies.add(new Company(name,website,title,startDate,endDate));
+        companies.add(new Company(name,website,title,null,startDate,endDate));
     }
 
     public List<Company> getCompanies() {
@@ -26,12 +26,12 @@ public class CompanySection extends AbstractSection{
 
         CompanySection that = (CompanySection) o;
 
-        return companies != null ? companies.equals(that.companies) : that.companies == null;
+        return companies.equals(that.companies);
     }
 
     @Override
     public int hashCode() {
-        return companies != null ? companies.hashCode() : 0;
+        return companies.hashCode();
     }
 
     @Override
