@@ -17,7 +17,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage <Integer> {
     }
 
     @Override
-    public void saveResume(Resume r, Integer searchKey) {
+    public void doSave(Resume r, Integer searchKey) {
         if (countResumes == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         }
@@ -25,16 +25,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage <Integer> {
         countResumes++;
     }
 
-    public void updateInStorage(Resume r, Integer searchKey) {
+    public void doUpdate(Resume r, Integer searchKey) {
         storage[searchKey] = r;
     }
 
     @Override
-    public Resume returnResume(Integer searchKey) {
+    public Resume doGet(Integer searchKey) {
         return storage[searchKey];
     }
 
-    public void deleteResume(Integer searchKey) {
+    public void doDelete(Integer searchKey) {
         countResumes--;
         deleteResumeInArray(searchKey);
     }

@@ -24,7 +24,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void saveResume(Resume r, File file) {
+    protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
             doWrite(r, file);
@@ -34,7 +34,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void updateInStorage(Resume r, File file) {
+    protected void doUpdate(Resume r, File file) {
         try {
             doWrite(r, file);
         } catch (IOException e) {
@@ -43,7 +43,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected Resume returnResume(File file) {
+    protected Resume doGet(File file) {
         try {
             return doReade(file);
         } catch (IOException e) {
@@ -52,7 +52,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void deleteResume(File file) {
+    protected void doDelete(File file) {
         if (file.delete()) {
             System.out.println(file.getName() + "delete");
         } else {
@@ -68,7 +68,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
         List<Resume> resumes = new ArrayList<>(files.length);
         for (File file : files) {
-            resumes.add(returnResume(file));
+            resumes.add(doGet(file));
         }
         return resumes;
     }
@@ -88,7 +88,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         File[] files = directory.listFiles();
         if (files != null) {
             for (File resume : files) {
-                deleteResume(resume);
+                doDelete(resume);
             }
         }
         throw new StorageException("Directory is null", null);
