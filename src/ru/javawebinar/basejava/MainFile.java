@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava;
 
 import java.io.File;
+import java.util.Objects;
 
 public class MainFile {
     private static int deep = 0;
@@ -13,13 +14,13 @@ public class MainFile {
     static void printFile(String path) {
         File file = new File(path);
         File[] files = file.listFiles();
-        for (File file1 : files) {
+        for (File file1 : Objects.requireNonNull(files)) {
             if (file1.isDirectory()) {
-                System.out.println(" ".repeat(deep) + file1.getName());
+                System.out.println("| ".repeat(deep) + file1.getName());
                 deep++;
                 printFile(file1.getAbsolutePath());
             } else {
-                System.out.println(" ".repeat(deep) + file1.getName());
+                System.out.println("| ".repeat(deep) + file1.getName());
             }
         }
         deep--;
