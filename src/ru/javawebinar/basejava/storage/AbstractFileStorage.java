@@ -3,8 +3,7 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,27 +26,27 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void doSave(Resume r, File file) {
         try {
             file.createNewFile();
-            doWrite(r, file);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        doUpdate(r, file);
     }
 
     @Override
     protected void doUpdate(Resume r, File file) {
         try {
-            doWrite(r, file);
+            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("File write error", r.getUuid(), e);
         }
     }
 
     @Override
     protected Resume doGet(File file) {
         try {
-            return doReade(file);
+            return doReade(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new StorageException("File read error", file.getName(), e);
         }
     }
 
@@ -91,7 +90,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
                 doDelete(resume);
             }
         }
-        throw new StorageException("Directory is null", null);
     }
 
     @Override
@@ -103,7 +101,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return resumes.length;
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
+    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
 
-    protected abstract Resume doReade(File file) throws IOException;
+    protected abstract Resume doReade(InputStream is) throws IOException;
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListSection extends AbstractSection {
+    private static final long serialVersionUID = 1L;
     private final List<String> contents = new LinkedList<>();
 
     public void addContent(String content) {

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CompanySection extends AbstractSection{
+    private static final long serialVersionUID = 1L;
     private final List<Company>companies = new LinkedList<>();
 
     public void addCompany (String name, String website, String title, String description, LocalDate startDate, LocalDate endDate) {
