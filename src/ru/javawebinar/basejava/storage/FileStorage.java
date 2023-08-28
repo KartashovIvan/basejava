@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    private SerializableStrategy serializableStrategy;
+    private final SerializableStrategy serializableStrategy;
 
-    protected AbstractFileStorage(File directory, SerializableStrategy serializableStrategy) {
+    protected FileStorage(File directory, SerializableStrategy serializableStrategy) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -64,10 +64,7 @@ public class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doCopyAll() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Error read directory", null);
-        }
+        File[] files = getListFile();
         List<Resume> resumes = new ArrayList<>(files.length);
         for (File file : files) {
             resumes.add(doGet(file));
@@ -87,20 +84,21 @@ public class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File resume : files) {
-                doDelete(resume);
-            }
+        for (File resume : getListFile()) {
+            doDelete(resume);
         }
     }
 
     @Override
     public int size() {
-        String[] resumes = directory.list();
-        if (resumes == null) {
+        return getListFile().length;
+    }
+
+    private File[] getListFile() {
+        File[] files = directory.listFiles();
+        if (files == null) {
             throw new StorageException("Error read directory", null);
         }
-        return resumes.length;
+        return files;
     }
 }

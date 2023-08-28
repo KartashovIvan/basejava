@@ -13,11 +13,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    private SerializableStrategy serializableStrategy;
+    private final SerializableStrategy serializableStrategy;
 
-    protected AbstractPathStorage(String dir, SerializableStrategy serializableStrategy) {
+    protected PathStorage(String dir, SerializableStrategy serializableStrategy) {
         directory = Paths.get(dir);
         this.serializableStrategy = serializableStrategy;
         Objects.requireNonNull(directory, "directory must not be null");
@@ -65,13 +65,7 @@ public class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> doCopyAll() {
-        Stream<Path> filesList;
-        try {
-            filesList = Files.list(directory);
-        } catch (IOException e) {
-            throw new StorageException("Could not read error", null, e);
-        }
-        return filesList.map(this::doGet).collect(Collectors.toList());
+        return getListFile().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
@@ -86,17 +80,17 @@ public class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        getListFile().forEach(this::doDelete);
     }
 
     @Override
     public int size() {
+        return (int) getListFile().count();
+    }
+
+    private Stream<Path> getListFile() {
         try {
-            return (int) Files.list(directory).count();
+            return Files.list(directory);
         } catch (IOException e) {
             throw new StorageException("Could not read error", null, e);
         }
