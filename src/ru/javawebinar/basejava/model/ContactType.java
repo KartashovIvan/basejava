@@ -17,6 +17,6 @@ public enum ContactType {
 
     @Override
     public String toString() {
-        return "\n" + title;
+        return title;
     }
 }

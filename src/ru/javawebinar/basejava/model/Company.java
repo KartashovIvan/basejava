@@ -1,22 +1,25 @@
 package ru.javawebinar.basejava.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Company implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final String name;
-    private final String website;
-    private final List<Period> periods = new LinkedList<>();
+    private String name;
+    private String website;
+    private List<Period> periods;
+    public Company() {
+    }
 
-    public Company(String name, String website, String title, String description, LocalDate startDate, LocalDate endDate) {
-        Objects.requireNonNull(name ,"name must not be null");
+    public Company(String name, String website, Period... periods) {
         this.name = name;
         this.website = website;
-        periods.add(new Period(title, description, startDate, endDate));
+        this.periods = Arrays.asList(periods);
     }
 
     public void addPeriod(Period period) {

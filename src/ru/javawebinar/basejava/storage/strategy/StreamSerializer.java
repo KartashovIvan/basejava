@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public interface SerializableStrategy {
+public interface StreamSerializer {
 
     void doWrite(Resume r, OutputStream os) throws IOException;
 
-    Resume doReade(InputStream is) throws IOException;
+    Resume doRead(InputStream is) throws IOException;
 }

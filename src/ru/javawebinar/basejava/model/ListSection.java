@@ -1,14 +1,23 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
-    private final List<String> contents = new LinkedList<>();
+    private List<String> contents;
 
-    public void addContent(String content) {
-        contents.add(content);
+    public ListSection() {
+    }
+
+    public ListSection(String... contents) {
+        this(Arrays.asList(contents));
+    }
+
+    public ListSection(List<String> contents) {
+        Objects.requireNonNull(contents, "items must not be null");
+        this.contents = contents;
     }
 
     public List<String> getContents() {
