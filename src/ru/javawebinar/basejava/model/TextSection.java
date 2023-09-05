@@ -13,6 +13,10 @@ public class TextSection extends AbstractSection {
         this.content = content;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,8 +32,4 @@ public class TextSection extends AbstractSection {
         return content != null ? content.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return content;
-    }
 }
