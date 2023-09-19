@@ -22,8 +22,22 @@ public class Company implements Serializable {
         this.periods = Arrays.asList(periods);
     }
 
-    public void addPeriod(Period period) {
-        periods.add(period);
+    public Company(String name, String website, List<Period> periods) {
+        this.name = name;
+        this.website = website;
+        this.periods = periods;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
     }
 
     @Override

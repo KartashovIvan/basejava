@@ -19,14 +19,6 @@ public class CompanySection extends AbstractSection {
         Objects.requireNonNull(companies, "organizations must not be null");
         this.companies = companies;
     }
-//
-//    public void addCompany(String name, String website, String title, String description, LocalDate startDate, LocalDate endDate) {
-//        companies.add(new Company(name, website, title, description, startDate, endDate));
-//    }
-//
-//    public void addEducation(String name, String website, String title, LocalDate startDate, LocalDate endDate) {
-//        companies.add(new Company(name, website, title, null, startDate, endDate));
-//    }
 
     public List<Company> getCompanies() {
         return companies;

@@ -27,16 +27,7 @@ public class Period implements Serializable {
         Objects.requireNonNull(endDate);
         Objects.requireNonNull(title);
         this.title = title;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public Period(String title, LocalDate startDate, LocalDate endDate) {
-        Objects.requireNonNull(startDate);
-        Objects.requireNonNull(endDate);
-        Objects.requireNonNull(title);
-        this.title = title;
+        this.description = description == null ? "": description;
         this.startDate = startDate;
         this.endDate = endDate;
     }

@@ -7,10 +7,10 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
-import ru.javawebinar.basejava.model.ContactType;
-import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.*;
 
 import java.io.File;
+import java.time.LocalDate;
 
 
 public abstract class AbstractStorageTest {
@@ -40,30 +40,30 @@ public abstract class AbstractStorageTest {
 
         R_1.addContact(ContactType.EMAIL, "mail@mail.ru");
         R_1.addContact(ContactType.TELEPHONE_NUMBER, "11111");
-/*        R_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
-        R_1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        R_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R_1.addSection(SectionType.PERSONAL, new TextSection("Personal data1"));
         R_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Ведение проектов на работе", "Настройка мониторинга", "Ежегодное повышение квалификации"));
         R_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java 8+", "Git", "SQL"));
-//        R_1.addSection(SectionType.EXPERIENCE,
-//                new CompanySection(
-//                        new Company("СО ЕЭС", "url",
-//                                new Period("Специалис", "Мониторинг и подержка работы IT инфраструктуры", LocalDate.of(2019, 1, 19), LocalDate.of(2020, 6, 30)))));
-//        R_1.addSection(SectionType.EXPERIENCE,
-//                new CompanySection(
-//                        new Company("ЗАО Раском", "url",
-//                                new Period("Сопровождение и подержка работы сети", LocalDate.of(2020, 7, 1), LocalDate.of(2021, 12, 23)))));
         R_1.addSection(SectionType.EXPERIENCE,
                 new CompanySection(
+                        new Company("СО ЕЭС", "url",
+                                new Period("Специалис", "Мониторинг и подержка работы IT инфраструктуры", LocalDate.of(2019, 1, 19), LocalDate.of(2020, 6, 30))),
                         new Company("НРД", "url",
                                 new Period("Главный специалист сопровождения", "2-я линия подержки", LocalDate.of(2021, 12, 24), LocalDate.now()))));
         R_1.addSection(SectionType.EDUCATION,
                 new CompanySection(
                         new Company("Stepic", "stepic.org",
-                                new Period("Интерактивный тренажер по SQL", LocalDate.of(2023, 1, 1), LocalDate.of(2023, 3, 1)),
-                                new Period("Java: основы многопоточности", LocalDate.of(2023, 4, 1), LocalDate.now()))));
-*/
+                                new Period("Интерактивный тренажер по SQL",null, LocalDate.of(2023, 1, 1), LocalDate.of(2023, 3, 1)),
+                                new Period("Java: основы многопоточности",null, LocalDate.of(2023, 4, 1), LocalDate.now()))));
+
         R_2.addContact(ContactType.SKYPE, "skype2");
         R_2.addContact(ContactType.TELEPHONE_NUMBER, "22222");
+        R_2.addSection(SectionType.OBJECTIVE, new TextSection("Objective2"));
+        R_2.addSection(SectionType.PERSONAL, new TextSection("Personal data2"));
+        R_2.addSection(SectionType.EXPERIENCE,
+                new CompanySection(
+                        new Company("ЗАО Раском", "url",
+                                new Period("Сопровождение и подержка работы сети",null, LocalDate.of(2020, 7, 1), LocalDate.of(2021, 12, 23)))));
     }
 
     private static final int STORAGE_LIMIT = 10_000;
